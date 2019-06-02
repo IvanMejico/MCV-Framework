@@ -27,16 +27,15 @@ class View {
     }
 
     public function start($type) {
-        echo $this->_outputBuffer = $type;
-        echo "----";
+        $this->_outputBuffer = $type;
         ob_start();
     }
 
     public function end() {
         if($this->_outputBuffer == 'head') {
-            echo $this->_head = ob_get_clean();
+            $this->_head = ob_get_clean();
         } elseif($this->_outputBuffer == 'body') {
-            echo $this->_body = ob_get_clean();
+            $this->_body = ob_get_clean();
         } else {
             die('You must first run the start method.');
         }
