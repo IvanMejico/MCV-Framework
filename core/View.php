@@ -10,8 +10,8 @@ class View {
         $viewAry = explode('/', $viewName);
         $viewString = implode(DS, $viewAry);
         if(file_exists(ROOT . DS . 'app' . DS . 'views' . DS . $viewString . '.php')) {
-            include(ROOT . DS . 'app' . DS . 'views' . DS . $viewString . '.php');
-            // include(ROOT . DS . 'app' . DS . 'views' . DS . 'layouts' . DS . $this->_layout . '.php');
+            include(ROOT . DS . 'app'  . DS . 'views' . DS . $viewString . '.php');
+            include(ROOT . DS . 'app' . DS . 'views' . DS . 'layouts' . DS . $this->_layout . '.php');
         } else {
             die('The view "' . $viewName .'" does not exist.');
         }
@@ -27,15 +27,16 @@ class View {
     }
 
     public function start($type) {
-        $this->_outputBuffer = $type;
+        echo $this->_outputBuffer = $type;
+        echo "----";
         ob_start();
     }
 
     public function end() {
         if($this->_outputBuffer == 'head') {
-            $this->_head = ob_get_clean();
+            echo $this->_head = ob_get_clean();
         } elseif($this->_outputBuffer == 'body') {
-            $this->_body = ob_get_clean();
+            echo $this->_body = ob_get_clean();
         } else {
             die('You must first run the start method.');
         }
