@@ -9,7 +9,7 @@ class Router {
 
         // action
         $action = (isset($url[0]) && $url[0] != '') ? $url[0] . 'Action' : 'indexAction';
-        $action_name = $action; // $action_name = $controller; // what he did
+        $action_name = $action;
         array_shift($url);
         // params
         $queryParams = $url;

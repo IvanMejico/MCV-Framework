@@ -2,7 +2,7 @@
 <?php $this->end(); ?>
 <?php $this->start('body'); ?>
 <div class="col-md-6 col-md-offset-3 well">
-    <form action="<?=PROOT?>register/login" class="form">
+    <form class="form" action="<?=PROOT?>register/login" method="post">
         <h3 class="text-center">Log In</h3>
         <div class="form-group">
             <label for="username">User</label>

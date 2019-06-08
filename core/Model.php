@@ -6,14 +6,14 @@ class Model {
 
     public function __construct($table) {
         $this->_db = DB::getInstance();
-        $this->table = $table;
-        $this->_columnNames = $table;
-        $this->_modelName = str_replace(' ', '', ucwords(str_replace('_',' ', $this->_table)));       
+        $this->_table = $table;        
+        $this->_modelName = str_replace(' ', '', ucwords(str_replace('_',' ', $this->_table)));
     }
 
     protected function _setTableColumns() {
         $columns = $this->get_columns();
         foreach($columns as $column) {
+            $columnName = $column->Field;
             $this->_columnNames[] = $column->Field;
             $this->{$columnName} = null;
         }
@@ -35,9 +35,9 @@ class Model {
     }
 
     public function findFirst($params = []) {
-        $resultsQuery = $this->_db->findFirst($this->_table, params);
+        $resultsQuery = $this->_db->findFirst($this->_table, $params);
         $result = new $this->_modelName($this->_table);
-        $result->populateObjData($resultQuery);
+        $result->populateObjData($resultsQuery);
         return $result;
     }
 
@@ -82,7 +82,7 @@ class Model {
 
     public function data() {
         $data = new stdClass();
-        foreach($this->columnNames as $column) {
+        foreach($this->_columnNames as $column) {
             $data->column = $this->column;
         }
         return $data;

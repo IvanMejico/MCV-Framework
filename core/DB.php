@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * This pretty much covers all the database processes and CRUD operations
+ */
+
 class DB {
     public static $_instance = null;
     private $_pdo, $_query, $_error = false, $_result, $_count = 0, $_lastInsertID = 'null';
@@ -20,6 +24,7 @@ class DB {
         return self::$_instance;
     }
 
+    // Executes the query and return the object instance
     public function query($sql, $params = []) {
         $this->_error = false;
         if($this->_query = $this->_pdo->prepare($sql)) {
@@ -42,6 +47,10 @@ class DB {
         return $this;
     }
 
+    /**
+    * Prepares the query string and pass the result as a parameter to the $this->query() method.
+    * Returns true if sucessful, false if not.
+    */ 
     protected function _read($table, $params=[]) {
         $conditionString = '';
         $bind = [];
@@ -70,7 +79,7 @@ class DB {
         }
 
         // order
-        if(array_key_exists(('order'), $params)) {
+        if(array_key_exists('order', $params)) {
             $order = ' ORDER BY ' . $params['order'];
         }
 
@@ -80,9 +89,6 @@ class DB {
         }
 
         $sql = "SELECT * FROM {$table}{$conditionString}{$order}{$limit}";
-
-        // dnd($sql);
-        
         if($this->query($sql, $bind)) {
             if(!count($this->_result)) return false;
             return true;
@@ -90,6 +96,7 @@ class DB {
         return false;
     }
 
+    // calls $this->read() method and returns the result
     public function find($table, $params=[]) {
         if($this->_read($table, $params)) {
             return $this->results();
@@ -97,6 +104,7 @@ class DB {
         return false;
     }
 
+    // calls $this->read() method and returns the first record
     public function findFirst($table, $params=[]) {
         if($this->_read($table, $params)) {
             return $this->first();
@@ -104,6 +112,7 @@ class DB {
         return false;
     }
 
+    // insert data to a table
     public function insert($table, $fields = []) {
         $fieldString = '';
         $valueString = '';
@@ -123,6 +132,7 @@ class DB {
         return false;
     }
 
+    // update data on a table
     public function update($table, $id, $fields =[]) {
         $fieldString = '';
         $values = [];
@@ -139,6 +149,7 @@ class DB {
         return false;
     }
 
+    // delete data from a table
     public function delete($table, $id) {
         $sql = "DELETE FROM {$table} WHERE id = {$id}";
         if(!$this->query($sql)->error()) {
