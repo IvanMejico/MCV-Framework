@@ -3,7 +3,7 @@
 class Cookie {
 
     public static function set($name, $value, $expiry) {
-        if(setCookie($name, $value, time()+$expiry, '/')) {
+        if(setcookie($name, $value, time()+$expiry, '/')) {
             return true;
         }
         return false;

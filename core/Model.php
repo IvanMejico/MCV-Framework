@@ -37,8 +37,19 @@ class Model {
     public function findFirst($params = []) {
         $resultsQuery = $this->_db->findFirst($this->_table, $params);
         $result = new $this->_modelName($this->_table);
-        $result->populateObjData($resultsQuery);
-        return $result;
+
+        // There is a problem here. The logic did not work out well.
+        //  When findFirst() method returns false, the populateObjData() method
+        //  don't get executed thus creating an error when password property is 
+        //  accessed in the Register.php
+
+        if($resultsQuery) {
+            $result->populateObjData($resultsQuery);
+            return $result;
+        }
+        // This line of code produces a bug so I changeg the return value to false
+        // return $result; 
+        return false;
     }
 
     public function findById($id) {
