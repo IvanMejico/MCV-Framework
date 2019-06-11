@@ -11,7 +11,7 @@ class Register extends Controller {
         $validation = new Validate();
         if($_POST) {
             // form validation
-            $validation->check($_POST, [
+            $validation->check($_POST, [ 
                 'username' => [
                     'display' => "Username",
                     'required' => true
@@ -38,5 +38,12 @@ class Register extends Controller {
         }
         $this->view->displayErrors = $validation->displayErrors();
         $this->view->render('register/login');
+    }
+
+    public function logoutAction() {
+        if(currentUser()) {
+            currentUser()->logout();
+        }
+        Router::redirect('register/login');
     }
 }

@@ -28,6 +28,14 @@ class Users extends Model {
         return $user1 = $this->findFirst(['conditions'=>"username = ?", 'bind'=>[$username]]);
     }
 
+    public static function currentLoggedInUser() {
+        if(!isset(self::$currentLoggedInUser) && Session::exists(CURRENT_USER_SESSION_NAME)) {
+            $u = new Users((int)Session::get(CURRENT_USER_SESSION_NAME));
+            self::$currentLoggedInUser = $u;
+        }
+        return self::$currentLoggedInUser;
+    }
+
     public function login($rememberMe=false) {
         Session::set($this->_sessionName, $this->id);
         if($rememberMe) {
@@ -38,5 +46,16 @@ class Users extends Model {
             $this->_db->query("DELETE FROM user_sessions WHERE user_id = ? AND user_agent = ?", [$this->id, $user_agent]);
             $this->_db->insert('user_sessions', $fields);
         }
+    }
+
+    public function logout() {
+        $user_agent = Session::uagent_no_version();
+        $this->_db->query("DELETE FROM user_sessions WHERE user_id = ? AND user_agent = ?", [$this->id, $user_agent]);
+        Session::delete(CURRENT_USER_SESSION_NAME);
+        if(Cookie::exists(REMEMBER_ME_COOKIE_NAME)) {
+            Cookie::delete(REMEMBER_ME_COOKIE_NAME);
+        }
+        self::$currentLoggedInUser = null;
+        return true;
     }
 }
