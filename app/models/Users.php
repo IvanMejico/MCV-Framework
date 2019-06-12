@@ -49,15 +49,13 @@ class Users extends Model {
     }
 
     public static function loginUserFromCookie() {
-        $user_session_model = new UserSessions();
-        $user_session = $user_session_model->findFirst([
-            'conditions' => "user_agent = ? AND session = ?",
-            'bind' => [Session::uagent_no_version(), Cookie::get(REMEMBER_ME_COOKIE_NAME)]
-        ]);
-        if($user_session->user_id != '') {
-            $user= new self((int)$user_session->user_id);
+        $userSession = UserSessions::getFromCookie();
+        if($userSession->user_id != '') {
+            $user= new self((int)$userSession->user_id);
         }
-        $user->login();
+        if($user) {
+            $user->login();
+        }
         return $user;
     }
 

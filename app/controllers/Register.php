@@ -24,9 +24,6 @@ class Register extends Controller {
             ]);
             if($validation->passed()) {
                 $user = $this->UsersModel->findByUsername($_POST['username']);
-                // This if statement is producing error because it is trying to access an object
-                //  property that won't be existing if findByUsername() return an object
-                //  that doesn't have that property included.
                 if($user && password_verify(Input::get('password'), $user->password)) {
                     $remember = (isset($_POST['remember_me']) && Input::get('remember_me')) ? true : false;
                     $user->login($remember);
