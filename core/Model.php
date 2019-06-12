@@ -79,14 +79,15 @@ class Model {
         return $this->_db->update($this->_table, $id, $fields);
     }
 
-    public function delete($id) {
+    public function delete($id = '') {
         if($id == '' && $this->id == '') return false;
         $id = ($id == '') ? $this->id : $id;
         if($this->_softDelete) {
             $this->update($id, ['deleted' => 1]);
         }
-        return $this_db->delete($this->_table, $id);
+        return $this->_db->delete($this->_table, $id);
     }
+    
     public function query($sql, $bind=[]) {
         return $this->_db->query($sql, $bind);
     }
