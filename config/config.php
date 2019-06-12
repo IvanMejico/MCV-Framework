@@ -16,4 +16,4 @@ define('SITE_TITLE', 'Ruah MVC Framework'); // This will be used if no site titl
 
 define('CURRENT_USER_SESSION_NAME', 'sdfExILlsidtoRWEsqaljfejczZeqBJ'); //session name for logged in user
 define('REMEMBER_ME_COOKIE_NAME', 'SLEWdaiIDAkntyPQWjXAcJVQPmARq'); // cookie name for logged in user remember me
-define('REMEMBER_ME_COOKIE_EXPIRY', 604800); // time in seconds for remember me cookie to live (30 days)
+define('REMEMBER_ME_COOKIE_EXPIRY', 2592000); // time in seconds for remember me cookie to live (30 days)
