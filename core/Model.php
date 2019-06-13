@@ -7,15 +7,15 @@ class Model {
     public function __construct($table) {
         $this->_db = DB::getInstance();
         $this->_table = $table;        
+        $this->_setTableColumns();
         $this->_modelName = str_replace(' ', '', ucwords(str_replace('_',' ', $this->_table)));
     }
 
     protected function _setTableColumns() {
         $columns = $this->get_columns();
         foreach($columns as $column) {
-            $columnName = $column->Field;
             $this->_columnNames[] = $column->Field;
-            $this->{$columnName} = null;
+            // $this->{$columnName} = null; // This procues a 'variable undefined' error
         }
     }
 
@@ -59,7 +59,9 @@ class Model {
     public function save() {
         $fields = [];
         foreach($this->_columnNames as $column) {
-            $fields[$column] = $this->column;
+            // I think the problem is in this line of code. The _columnNames 
+            //  array has more elements than the actual inputted data.
+            $fields[$column] = $this->$column; 
         }
         // determine whether to update or insert
         if(property_exists($this, 'id') && $this->id != '') {
@@ -99,12 +101,14 @@ class Model {
         }
         return $data;
     }
-
+    
+    // create object properties by checking if the paremeter keys exist in
+    //  the database then saving the form values to the properties
     public function assign($params) {
-        if(!empty(params)) {
+        if(!empty($params)) {
             foreach($params as $key => $value) {
                 if(in_array($key, $this->_columnNames)) {
-                    $this->$key = sanitize($val);
+                    $this->$key = sanitize($value);
                 }
             }
             return true;
