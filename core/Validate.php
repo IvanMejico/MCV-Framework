@@ -58,7 +58,7 @@ class Validate {
 
                         case 'valid_email':
                             if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                                $this->addError(["{$dispay} must be a valid email address.", $item]);
+                                $this->addError(["{$display} must be a valid email address.", $item]);
                             }
                             break;
                     }
