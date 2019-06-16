@@ -13,6 +13,7 @@ define('DEFAULT_LAYOUT', 'default'); // if no layout is set in the controller us
 DEFINE('PROOT', '/MVC-Framework/'); // set this to '/' for a live server.
 
 define('SITE_TITLE', 'Ruah MVC Framework'); // This will be used if no site title is SITE_TITLE
+define('MENU_BRAND', 'IVAN'); // This is the Brand text in the menu
 
 define('CURRENT_USER_SESSION_NAME', 'sdfExILlsidtoRWEsqaljfejczZeqBJ'); //session name for logged in user
 define('REMEMBER_ME_COOKIE_NAME', 'SLEWdaiIDAkntyPQWjXAcJVQPmARq'); // cookie name for logged in user remember me

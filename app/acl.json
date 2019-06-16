@@ -9,7 +9,8 @@
         "denied" : {
            "Register" : ["login", "register"]
         },
-        "Register" : ["logout"]
+        "Register" : ["logout"],
+        "Tools" : ["first", "second", "third"]
     }
 }
   
